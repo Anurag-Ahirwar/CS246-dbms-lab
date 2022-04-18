@@ -1,0 +1,103 @@
+#include<bits/stdc++.h>
+using namespace std;
+# define ll long long int 
+# define rep(i,a,b) for(int i=a;i<=b;i++)
+# define MOD 1000000007
+
+ll bpow(ll x,ll y){
+    ll ans=1;
+    while(y>0){
+        if(y%2==1){
+            ans=(ans*x);
+            
+        }
+        x=(x*x);
+        y/=2;
+    }
+    return ans;
+}
+
+ll logg(ll x,ll y){
+    ll c=1;
+    ll count=0;
+    while(c<x){
+        c*=y;
+        if(c>x){
+            break;
+        }
+        count++;
+    }
+    return count;
+}
+
+int pg_size;
+vector<vector<int>> pages;
+int pct=0;
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cin>>pg_size;
+    vector<int> v={pg_size-16};
+    pages.push_back(v);
+    while(1){
+        int x;
+        cin>>x;
+        if(x==4){
+            break;
+        }else if(x==1){
+            int si,key;
+            cin>>si>>key;
+            int chh=0;
+            rep(i,0,pct){
+            if(pages[i][0]>=(si+4)){
+                chh=1;
+                pages[i].push_back(key);
+                pages[i][0]-=(si+4);
+                break;
+            }
+            }
+            if(chh==0){
+                pct++;
+                pages.push_back(v);
+                pages[pct].push_back(key);
+                pages[pct][0]-=(si+4);
+                
+            }
+
+        }else if(x==2){
+            if(pages[0][0]==pg_size-16){
+                cout<<0<<endl;
+            }else{
+                cout<<pct+1<<" ";
+                for(int i=0;i<=pct;i++){
+                    cout<<pages[i].size()-1<<" ";
+                }
+                cout<<endl;
+            }
+        }else if(x==3){
+            int pk;
+            cin>>pk;
+            int ch=0;
+            int pgn,sno;
+            rep(i,0,pct){
+                rep(j,0,pages[i].size()-1){
+                    if(pages[i][j]==pk&&j!=0){
+                        ch=1;
+                        pgn=i;
+                        sno=j;
+                        break;
+                    }
+                }
+                if(ch==1){
+                    break;
+                }
+            }
+            if(ch==0){
+                cout<<"-1"<<" "<<"-1"<<endl;
+            }else{
+                cout<<pgn<<" "<<sno-1<<endl;
+            }
+        }
+
+    }
+}
